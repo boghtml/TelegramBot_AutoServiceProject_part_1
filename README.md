@@ -71,7 +71,7 @@ The Telegram Bot is an essential part of this system, designed to facilitate the
 
 ## Functionality
 
-In order to view the functionality of the bot, open the file: "Explanatory note.docs" and go to page 56
+In order to view the functionality of the bot, open the file: **"Explanation_note_of_my_work(courses-project).docx"** and go to page 56
 
 ## Conclusion
 
