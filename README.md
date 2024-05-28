@@ -10,6 +10,8 @@ This project is part of a comprehensive car service management system designed t
 
 Each component is integrated with the MongoDB cloud database to ensure seamless data synchronization and availability.
 
+![Структура проекту](https://github.com/boghtml/TelegramBot_AutoServiceProject_part_1/assets/119760440/f30720c6-70fe-47de-a98a-502ae62bf98f)
+
 ## Telegram Bot Review
 
 The Telegram Bot is an essential part of this system, designed to facilitate the process of signing up customers for service. It allows customers to:
@@ -21,12 +23,11 @@ The Telegram Bot is an essential part of this system, designed to facilitate the
 ## Features
 
 ### Main Features:
-- **Customer Registration**: Customers can register by entering their personal details and vehicle information.
-- **Book a Service**: Customers can choose the desired service, date, and time of visit.
+- **Sign up for service**: The client can sign up for service at a car service by entering his First Name, Last Name, Family name, information about the car, add a personal comment with wishes for the services and choose the desired date of visit.
 - **View Services**: Customers can view the list of available services offered by the car service center.
 - **Get Information**: Customers can get contact information, address, and other useful information about the car service center.
 
-### Additional Features:
+### Possible future bot improvements:
 - **Employee Workload Tracking**: Admins can monitor employee workload through the bot interface.
 - **Analytics**: Administrators can receive reports on earnings, service popularity, and employee workload.
 
@@ -54,13 +55,6 @@ The Telegram Bot is an essential part of this system, designed to facilitate the
     python main.py
     ```
 
-## Usage
-
-1. **Registration**: Customers can register by entering their details through the Telegram Bot.
-2. **Booking**: Customers can book a service by selecting the desired service, date, and time.
-3. **View Services**: Customers can view the list of available services at any time.
-4. **Information**: Customers can get information about the car service, including contact details and address.
-
 ## Project Structure
 
 - **main.py**: Entry point for the Telegram bot.
@@ -70,11 +64,11 @@ The Telegram Bot is an essential part of this system, designed to facilitate the
 
 ## Advantages
 
-- **Convenience**: Provides an easy and accessible way for customers to interact with the car service.
-- **Efficiency**: Streamlines the booking and information retrieval process.
+- **Convenience**: provides customers with a simple and affordable way to interact with the car service.
+- **Efficiency**: simplifies the process of booking and obtaining information.
 - **Integration**: Seamlessly integrates with the main application and website for data consistency.
-- **Analytics**: Provides valuable insights and reports for administrators.
+-**Cloudiness**: since the project works with the MongoDB temple database, it ensures the use of the bot, just with the presence of Telegrem and the Internet
 
 ## Conclusion
 
-The Telegram Bot for AutoService is a vital component of a larger system aimed at improving car service management. By leveraging the convenience of Telegram, the bot enhances customer interaction and streamlines service booking. Integrated with MongoDB, it ensures data consistency and availability, contributing to an efficient and comprehensive car service management system.
+Telegram Bot for AutoService is a vital component of a larger system aimed at improving auto service management. Using the convenience of Telegram, the bot improves interaction with customers and simplifies service registration. Integrated with MongoDB, it ensures data consistency and availability, facilitating an efficient and comprehensive car service management system.
