@@ -67,7 +67,11 @@ The Telegram Bot is an essential part of this system, designed to facilitate the
 - **Convenience**: provides customers with a simple and affordable way to interact with the car service.
 - **Efficiency**: simplifies the process of booking and obtaining information.
 - **Integration**: Seamlessly integrates with the main application and website for data consistency.
--**Cloudiness**: since the project works with the MongoDB temple database, it ensures the use of the bot, just with the presence of Telegrem and the Internet
+- **Cloudiness**: since the project works with the MongoDB temple database, it ensures the use of the bot, just with the presence of Telegrem and the Internet.
+
+## Functionality
+
+In order to view the functionality of the bot, open the file: "Explanatory note.docs" and go to page 56
 
 ## Conclusion
 
