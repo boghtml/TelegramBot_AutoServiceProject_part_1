@@ -1,3 +1,7 @@
+## Functionality
+
+To view the functionality of the bot, open the file: **"Explanation_to_my_work(courses-project).docx"** and go to page **56** and read to **61**
+
 # Telegram Bot for AutoService
 
 ## Introduction
@@ -68,10 +72,6 @@ The Telegram Bot is an essential part of this system, designed to facilitate the
 - **Efficiency**: simplifies the process of booking and obtaining information.
 - **Integration**: Seamlessly integrates with the main application and website for data consistency.
 - **Cloudiness**: since the project works with the MongoDB temple database, it ensures the use of the bot, just with the presence of Telegrem and the Internet.
-
-## Functionality
-
-To view the functionality of the bot, open the file: **"Explanation_to_my_work(courses-project).docx"** and go to page **56** and read to **61**
 
 ## Conclusion
 
