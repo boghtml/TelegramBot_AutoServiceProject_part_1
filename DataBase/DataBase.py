@@ -25,7 +25,8 @@ def get_client() -> Optional[MongoClient]:
     try:
         _client = MongoClient(uri, server_api=ServerApi('1'))
         _client.admin.command('ping')
-        _db = _client.get_default_database() if _client else None
+        # get_default_database() is safe to call because _client is set
+        _db = _client.get_default_database()
         print("Connected to MongoDB")
         return _client
     except Exception as e:

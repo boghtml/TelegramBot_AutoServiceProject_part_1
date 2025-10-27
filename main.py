@@ -95,7 +95,7 @@ class AutoServiceBot:
         if context.user_data:
             keyboard = [[KeyboardButton("Відмінити запис")]]
         reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
-        await update.message.reply_text("Почнемо запис, Якщо ви захочете припити запис, то введіть команду /cancel.\n")
+        await update.message.reply_text("Почнемо запис. Якщо ви захочете припинити запис, введіть команду /cancel.\n")
         await update.message.reply_text("Введіть ваше ім'я:", reply_markup=reply_markup)
         return NAME
 
@@ -479,7 +479,7 @@ class AutoServiceBot:
             await context.bot.send_message(chat_id=chat_id, text="Welcome to our service!")
 
     async def book(self, update: Update, context: CallbackContext) -> None:
-        await update.message.reply_text("Почнемо запис, Якщо ви захочете припити запис, то введіть команду /cancel.\nБудь ласка, введіть ваше ім'я.")
+        await update.message.reply_text("Почнемо запис. Якщо ви захочете припинити запис, введіть команду /cancel.\nБудь ласка, введіть ваше ім'я.")
         return NAME
 
     def run(self):
@@ -489,8 +489,8 @@ if __name__ == '__main__':
 
     token = os.environ.get('TELEGRAM_TOKEN')
     if not token:
-        print("ERROR: TELEGRAM_TOKEN environment variable is not set.\n" \
-              "Set TELEGRAM_TOKEN before running the bot. See .env.example for format.")
+        print("ERROR: TELEGRAM_TOKEN environment variable is not set.\n"
+              "Set TELEGRAM_TOKEN before running the bot. Example (PowerShell): $env:TELEGRAM_TOKEN = 'your_token_here'")
         raise SystemExit(1)
 
     bot = AutoServiceBot(token)
