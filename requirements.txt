@@ -1,0 +1,6 @@
+python-telegram-bot>=20.0
+pymongo>=4.0
+pyperclip>=1.8.2
+dnspython>=2.0.0
+# Optional (if you use pyTelegramBotAPI elsewhere)
+pyTelegramBotAPI>=4.0.0
