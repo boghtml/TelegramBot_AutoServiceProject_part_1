@@ -91,8 +91,8 @@ class AutoServiceBot:
         await context.bot.send_message(chat_id=update.effective_chat.id, text="Запис завершено.")
         return ConversationHandler.END
     async def ask_name(self, update: Update, context: CallbackContext) -> int:
-        keyboard = []  # Створюємо порожній список для кнопок
-        if context.user_data:  # Перевіряємо, чи був розпочатий процес запису
+        keyboard = []  
+        if context.user_data:
             keyboard = [[KeyboardButton("Відмінити запис")]]
         reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
         await update.message.reply_text("Почнемо запис, Якщо ви захочете припити запис, то введіть команду /cancel.\n")
@@ -100,7 +100,7 @@ class AutoServiceBot:
         return NAME
 
     async def ask_surname(self, update: Update, context: CallbackContext) -> int:
-        context.user_data['name'] = update.message.text  # Збереження імені перед запитом прізвища
+        context.user_data['name'] = update.message.text  
         await update.message.reply_text("Введіть ваше прізвище:")
         return SURNAME
 
@@ -117,21 +117,18 @@ class AutoServiceBot:
 
     async def phone_option_handler(self, update, context):
         if update.message.contact is not None:
-            # Користувач надав номер через контакт
+
             context.user_data['phone'] = update.message.contact.phone_number
             await update.message.reply_text(f"Ми отримали ваш номер: {context.user_data['phone']}",
                                             reply_markup=ReplyKeyboardRemove())
-            # Переходимо до наступного кроку
             return await self.ask_brand(update, context)
         else:
-            # Ця частина буде виконана, якщо користувач вибере "Ввести власноруч"
             await update.message.reply_text("Будь ласка, введіть ваш номер телефону вручну(наприклад +380962813659):",
                                             reply_markup=ReplyKeyboardRemove())
             return PHONE_MANUAL
 
     async def ask_brand(self, update: Update, context: CallbackContext) -> int:
         if 'phone' not in context.user_data:
-            # Якщо номер телефону не було встановлено автоматично, читаємо його з тексту повідомлення
             context.user_data['phone'] = update.message.text
         await update.message.reply_text("Введіть марку вашого авто:")
         return BRAND
@@ -171,14 +168,12 @@ class AutoServiceBot:
         if action == 'setOrderDate':
             await self.handle_month_change(update, context)
 
-        # Обробка вибору дня
         elif action == 'selectOrderDay':
             await self.handle_date_selection(update, context)
 
         else:
             await query.answer("Ця дія не підтримується.", show_alert=True)
 
-        # Завжди викликайте query.answer() для відповіді на запит
         await query.answer()
 
     async def handle_month_change(self, update: Update, context: CallbackContext) -> None:
@@ -208,8 +203,8 @@ class AutoServiceBot:
     def deliveryDateButtons(self, orderID, year, month, dayy):
         daysArray, monthh, yearr = self.getDateAttributes(year, month)
 
-        btns = []  # Основний список для всіх кнопок
-        week_btns = []  # Тимчасовий список для кнопок поточного тижня
+        btns = [] 
+        week_btns = []
 
         for i, day in enumerate(daysArray, start=1):
             if day == '*' or day == '.':
@@ -218,12 +213,10 @@ class AutoServiceBot:
                 week_btns.append(
                     InlineKeyboardButton(text=str(day), callback_data=f'selectOrderDay_{orderID}_{day}_{month}_{yearr}')
                 )
-            # Перевірка чи завершено тиждень або чи це останній день місяця
             if i % 7 == 0 or i == len(daysArray):
                 btns.append(week_btns)
-                week_btns = []  # Очищення тимчасового списку для наступного тижня
+                week_btns = []
 
-        # Додавання кнопок для переходу між місяцями
         month_switch_buttons = [
             InlineKeyboardButton(text='<<<', callback_data=f'setOrderDate_{orderID}_{dayy}_{month - 1}_{yearr}'),
             InlineKeyboardButton(text=f'{monthh} {yearr}', callback_data='ignore'),
@@ -312,7 +305,7 @@ class AutoServiceBot:
                 return ConversationHandler.END
 
             user_data = context.user_data
-            order_id = save_appointment_to_db(user_data)  # Збереження замовлення і отримання ID
+            order_id = save_appointment_to_db(user_data) 
 
             if order_id:
 
@@ -347,7 +340,7 @@ class AutoServiceBot:
             elif user_text.lower() == "ні":
                 return await self.ask_date(update, context)
             else:
-                context.user_data['comment'] = user_text  # Зберігаємо коментар
+                context.user_data['comment'] = user_text
                 return await self.ask_date(update, context)
         except Exception as e:
             print(e)
@@ -393,11 +386,9 @@ class AutoServiceBot:
         query = update.callback_query
         data = query.data.split('_')
         order_id, day, month, year = data[1], int(data[2]), int(data[3]), int(data[4])
-        # Форматування дати для виведення
         formatted_date = f"{day:02d}-{month:02d}-{year}"
         context.user_data['date'] = formatted_date
 
-        # Відправлення повідомлення про вибір дати
         await context.bot.send_message(
             chat_id=update.effective_chat.id,
             text=f"Ви записалися на {formatted_date}. Дякуємо за вибір нашого сервісу!"
@@ -405,10 +396,8 @@ class AutoServiceBot:
 
         await query.answer()
         await query.edit_message_reply_markup(reply_markup=None)
-        # Можливо, тут вам захочеться викликати submit_appointment або іншу логіку
         return await self.submit_appointment(update, context)
 
-    # інші методи
     async def start(self, update: Update, context: CallbackContext) -> None:
 
         message = ("👋 Вітаємо у нашому автосервісі! Ми раді вітати вас.\n\n"
@@ -447,7 +436,6 @@ class AutoServiceBot:
             await query.edit_message_text(text=contact_info)
 
 
-    # Додаткові методи для обробки команд, аналогічні до методів для обробки натискань кнопок
     async def about(self, update: Update, context: CallbackContext) -> None:
         about_text = ("🚗 Ласкаво просимо до AutoServicePro!\n\n"
                       "Ми надаємо повний спектр послуг для обслуговування та ремонту вашого автомобіля. "
@@ -471,17 +459,24 @@ class AutoServiceBot:
         services_message += "- " * 43 + "\n"
 
         for service in services_list:
-            # Вирівнювання тексту використовуючи форматування
             service_line = f"{service['name']:<30} {service['price']:>5} грн"
             services_message += f"<pre>{service_line}</pre>\n"
 
-        # Відправлення повідомлення з використанням HTML
         await update.message.reply_text(services_message, parse_mode='HTML')
 
     async def send_welcome_photo(self, update: Update, context: CallbackContext) -> None:
         chat_id = update.message.chat_id
-        photo_url = 'D:\Qt_designer\TelegramBotAutoService\WelcomePicture.jpg'
-        await context.bot.send_photo(chat_id=chat_id, photo=photo_url, caption="Ласкаво просимо до нашого автосервісу!")
+
+        photo_path = os.path.join(os.path.dirname(__file__), 'WelcomePicture.jpg')
+        try:
+            with open(photo_path, 'rb') as photo_file:
+                await context.bot.send_photo(chat_id=chat_id, photo=photo_file,
+                                             caption="Ласкаво просимо до нашого автосервісу!")
+        except FileNotFoundError:
+            await context.bot.send_message(chat_id=chat_id, text="Welcome image not found.")
+        except Exception as e:
+            print(f"Error sending welcome photo: {e}")
+            await context.bot.send_message(chat_id=chat_id, text="Welcome to our service!")
 
     async def book(self, update: Update, context: CallbackContext) -> None:
         await update.message.reply_text("Почнемо запис, Якщо ви захочете припити запис, то введіть команду /cancel.\nБудь ласка, введіть ваше ім'я.")
