@@ -1,4 +1,4 @@
-import calendar  # pip install calendar
+import calendar
 import datetime
 import os
 
