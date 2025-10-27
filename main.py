@@ -1,5 +1,6 @@
 import calendar  # pip install calendar
 import datetime
+import os
 
 import bson
 import pyperclip
@@ -18,16 +19,13 @@ class AutoServiceBot:
     def __init__(self, token):
         self.application = Application.builder().token(token).build()
 
-        self.application.add_handler(CallbackQueryHandler(self.handle_callback_query))
-
         self.application.add_handler(CommandHandler('start', self.start))
         self.application.add_handler(CommandHandler('aboutus', self.about))
         self.application.add_handler(CommandHandler('mycontact', self.contact))
         self.application.add_handler(CommandHandler('ourservices', self.services))
 
+        # Callback handler for button-style callback data like 'about'/'contact'
         self.application.add_handler(CallbackQueryHandler(self.handle_button_click))
-
-        self.application.add_handler(CallbackQueryHandler(self.handle_callback_query))
 
         self.get_month_days(2024, 3)
 
@@ -489,13 +487,16 @@ class AutoServiceBot:
         await update.message.reply_text("Почнемо запис, Якщо ви захочете припити запис, то введіть команду /cancel.\nБудь ласка, введіть ваше ім'я.")
         return NAME
 
-        # Ваш код для відповіді на команду /signupforcarservice
     def run(self):
         self.application.run_polling()
 
 if __name__ == '__main__':
-    token = '7023889386:AAHlRfbpLCfgEYsWN9As6ACdhlQhqKpanzE'
+
+    token = os.environ.get('TELEGRAM_TOKEN')
+    if not token:
+        print("ERROR: TELEGRAM_TOKEN environment variable is not set.\n" \
+              "Set TELEGRAM_TOKEN before running the bot. See .env.example for format.")
+        raise SystemExit(1)
+
     bot = AutoServiceBot(token)
     bot.run()
-
-# 7023889386:AAHlRfbpLCfgEYsWN9As6ACdhlQhqKpanzE

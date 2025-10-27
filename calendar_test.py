@@ -1,5 +1,5 @@
 import telebot
-import calendar  # pip install calendar
+import calendar
 import datetime
 
 def get_month_days(year, month):
@@ -10,35 +10,25 @@ def get_month_days(year, month):
 
     dayArr = []
 
-    # Get the first and last day of the selected month
     first_day_weekday, last_day = calendar.monthrange(year, month)
 
-    # Adjust the first day if it is not Monday (0: Monday, 6: Sunday)
-    first_day_offset = (first_day_weekday) % 7   # Convert to 0: Monday, 6: Sunday
+    first_day_offset = (first_day_weekday) % 7  
 
-    # Fill the previous month's days if needed
     for i in range(first_day_offset):
         dayArr.append('.')
 
-    # Print the days for the selected month
     for day in range(1, last_day + 1):
         if year < current_year or (year == current_year and month < current_month):
-            # Print past months' days as "*"
             dayArr.append('*')
         elif year == current_year and month == current_month and day < current_day:
-            # Print past days of the current month as "*"
             dayArr.append('*')
         elif year == current_year and month == current_month and day == current_day and now.hour > 20:
-            # Print past days of the current month as "*"
             dayArr.append('*')
         elif year == current_year and month == current_month and day == current_day:
-            # Print the current date
             dayArr.append(day)
         else:
-            # Print future days of the current month with their actual date
             dayArr.append(day)
 
-    # Fill the remaining days of the week with "."
     remaining_days = ((7 - (first_day_offset + last_day) % 7) % 7)
     for i in range(remaining_days):
         dayArr.append('.')
@@ -75,35 +65,42 @@ def getDateAttributes(year, month):
     return daysArr, month, year
 
 
-def deliveryDateButtons(self, orderID, year, month, dayy):  # <-<-<----- FIX FIX FIX FIX FIX FIX FIX FIX FIX FIX FIX FIX FIX FIX
+def deliveryDateButtons(orderID, year, month, dayy):
+    """Create an InlineKeyboardMarkup with calendar day buttons.
+
+    Disabled/past days use callback_data='ignore'.
+    """
     btns = []
 
-    deliveryDateButtons = telebot.types.InlineKeyboardMarkup(row_width=7)
+    markup = telebot.types.InlineKeyboardMarkup(row_width=7)
 
     daysArray, monthh, yearr = getDateAttributes(year, month)
 
     for day in daysArray:
         if day == '*' or day == '.':
-            btns.append(telebot.types.InlineKeyboardButton(text=day, callback_data=f'*'))
+            btns.append(telebot.types.InlineKeyboardButton(text=day, callback_data='ignore'))
         else:
-            btns.append(telebot.types.InlineKeyboardButton(text=day, callback_data=f'selectOrderDay_{orderID}_{day}_{month}_{yearr}'))
+            btns.append(
+                telebot.types.InlineKeyboardButton(text=str(day), callback_data=f'selectOrderDay_{orderID}_{day}_{month}_{yearr}')
+            )
 
+    # Normalize month bounds
     if month <= 0:
         month = 12
     elif month >= 13:
         month = 1
 
-    deliveryDateButtons.add(*btns)
-    deliveryDateButtons.row(telebot.types.InlineKeyboardButton(text='<<<', callback_data=f'setOrderDate_{orderID}_{dayy}_{month - 1}_{yearr}'),
-                            telebot.types.InlineKeyboardButton(text=f'{monthh} {yearr}', callback_data='*'),
-                            telebot.types.InlineKeyboardButton(text='>>>', callback_data=f'setOrderDate_{orderID}_{dayy}_{month + 1}_{yearr}'))
-    # deliveryDateButtons.row(telebot.types.InlineKeyboardButton(text='✅ Підтвердити дату', callback_data=f"acceptDelivaryDate_{day}_{month}_{yearr}"))
+    markup.add(*btns)
+    markup.row(
+        telebot.types.InlineKeyboardButton(text='<<<', callback_data=f'setOrderDate_{orderID}_{dayy}_{month - 1}_{yearr}'),
+        telebot.types.InlineKeyboardButton(text=f'{monthh} {yearr}', callback_data='ignore'),
+        telebot.types.InlineKeyboardButton(text='>>>', callback_data=f'setOrderDate_{orderID}_{dayy}_{month + 1}_{yearr}')
+    )
 
-    return deliveryDateButtons
+    return markup
 
 
 if __name__ == '__main__':
-    # Example usage: for September 2023
     year = 2023
     month = 9
     get_month_days(year, month)
