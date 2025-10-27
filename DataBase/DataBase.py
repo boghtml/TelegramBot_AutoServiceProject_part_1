@@ -42,7 +42,7 @@ def _get_db():
     if not client:
         raise RuntimeError("MongoDB client not available. Set MONGO_URI environment variable.")
 
-    db = client.get_default_database() if client else client['auto_service']
+    db = client.get_default_database()
     _db = db
     return _db
 
